@@ -16,7 +16,7 @@ class HTTPRequestManager {
     typealias FailureHandler = (String)-> Void
     typealias Parameter = [String: Any]?
     
-    private let url = "http://46.101.236.211:3330/api/"
+    private let url = "http://46.101.236.211:3330/api"
     
     private func request(method: HTTPMethod, endpoint: String, parameters: Parameter, completion: @escaping SuccessHandler, error: @escaping FailureHandler) {
         
@@ -78,6 +78,12 @@ class HTTPRequestManager {
     }
     internal func get(api: String, completion: @escaping SuccessHandler, error: @escaping FailureHandler) {
         request(method: .get, endpoint: api, parameters: nil, completion: completion, error: error)
+    }
+    
+    func downloadFile() {
+        Alamofire.download("46.101.236.211:3330/api/v1/documents/generate").responseData { (response) in
+            print(123)
+        }
     }
     
     private func isConnectedToNetwork() -> Bool {

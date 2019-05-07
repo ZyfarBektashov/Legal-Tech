@@ -48,11 +48,12 @@ class FillViewController: UIViewController {
                            year: year.text!,
                            duration: duration.text!)
         showProgressHud()
-        ServerManager.shared.generatePDF(file: file, {
-            print("123")
-        }) { (error) in
-            self.showErrorAlert(message: error)
-            self.hideProgressHud()
-        }
+        ServerManager.shared.downloadPDFFile()
+//        ServerManager.shared.generatePDF(file: file, {
+//            print("123")
+//        }) { (error) in
+//            self.showErrorAlert(message: error)
+//            self.hideProgressHud()
+//        }
     }
 }

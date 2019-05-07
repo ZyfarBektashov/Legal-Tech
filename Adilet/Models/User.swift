@@ -15,6 +15,7 @@ struct User: Decodable {
     var gender: String
     var email: String
     var passport_no: String
+    var passport_expiration: String
     var password: String
     
     func toDictionary() -> [String: Any] {
@@ -24,6 +25,21 @@ struct User: Decodable {
                 "gender": gender,
                 "email": email,
                 "passport_no": passport_no,
+                "passport_expiration": passport_expiration,
                 "password": password]
     }
+}
+
+struct Create: Decodable {
+    var username: String
+    var password: String
+    
+    func toDictionary() -> [String: Any] {
+        return ["username" : username,
+                "password" : password]
+    }
+}
+
+struct Token: Decodable {
+    var token: String
 }

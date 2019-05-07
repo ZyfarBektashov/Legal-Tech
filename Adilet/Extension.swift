@@ -26,4 +26,15 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
+    func saveToken(token: String) {
+        UserDefaults.standard.set(token, forKey: "token")
+    }
+    
+    func getToken() -> String {
+        if let token = UserDefaults.standard.string(forKey: "token") {
+            return token
+        }
+        return ""
+    }
 }

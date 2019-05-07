@@ -40,7 +40,8 @@ class FileViewController: UIViewController {
     }
     
     @IBAction func share(_ sender: UIButton) {
-        let activityVC = UIActivityViewController(activityItems: [docWebView.request?.url!.absoluteString ?? ""], applicationActivities: nil)
+        let myPDF = NSData(contentsOf: Bundle.main.url(forResource: "типовой договор оказания услуг", withExtension: "pdf")!)
+        let activityVC = UIActivityViewController(activityItems: [myPDF], applicationActivities: nil)
         present(activityVC, animated: true, completion: nil)
     }
 }

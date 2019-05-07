@@ -37,17 +37,23 @@ class SignUpViewController: UIViewController {
     @IBAction func signUp(_ sender: CustomButton) {
         let user = User(first_name: name.text!,
                         last_name: surname.text!,
-                        date_of_birth: birthday.text!,
+                        date_of_birth: "1021-11-11",
                         gender: gender.text!,
                         email: email.text!,
                         passport_no: passportNumber.text!,
+                        passport_expiration: "1021-11-11",
                         password: password.text!)
-        showProgressHud()
         ServerManager.shared.signUp(user: user, {
-            print(123)
+            let username = user.email
+            let password = user.password
+            ServerManager.shared.getToken(create: Create(username: username, password: password), { (token) in
+                self.saveToken(token: token.token)
+            }, error: { (error) in
+                
+            })
         }) { (error) in
-            self.showErrorAlert(message: error)
             self.hideProgressHud()
+            self.showErrorAlert(message: error)
         }
     }
 }

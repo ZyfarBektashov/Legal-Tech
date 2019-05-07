@@ -19,7 +19,7 @@ class ServerManager: HTTPRequestManager {
     }
     
     func getCategories(_ completion: @escaping ([MainCategory])-> Void, error: @escaping (String)-> Void) {
-        self.get(api: "v1/document_categories/", completion: { (data) in
+        self.get(api: "/v1/document_categories/", completion: { (data) in
             do {
                 guard let data = data else { return }
                 let categories = try JSONDecoder().decode([MainCategory].self, from: data)
@@ -31,7 +31,7 @@ class ServerManager: HTTPRequestManager {
     }
     
     func getCategoryDetails(id: Int, _ completion: @escaping (CategoryDetail)-> Void, error: @escaping (String)-> Void) {
-        self.get(api: "v1/document_categories/\(id)", completion: { (data) in
+        self.get(api: "/v1/document_categories/\(id)", completion: { (data) in
             do {
                 guard let data = data else { return }
                 let detail = try JSONDecoder().decode(CategoryDetail.self, from: data)
@@ -43,9 +43,25 @@ class ServerManager: HTTPRequestManager {
     }
     
     func signUp(user: User, _ completion: @escaping ()-> Void, error: @escaping (String)-> Void) {
-        self.post(api: "v1/users", parameters: user.toDictionary(), completion: { (data) in
+        self.post(api: "/v1/users", parameters: user.toDictionary(), completion: { (data) in
             completion()
         }, error: error)
+    }
+    
+    func getToken(create: Create, _ completion: @escaping (Token)-> Void, error: @escaping (String)-> Void) {
+        self.post(api: "-token-auth/", parameters: create.toDictionary(), completion: { (data) in
+            do {
+                guard let data = data else { return }
+                let token = try JSONDecoder().decode(Token.self, from: data)
+                completion(token)
+            } catch let e {
+                error(e.localizedDescription)
+            }
+        }, error: error)
+    }
+    
+    func downloadPDFFile() {
+        self.downloadFile()
     }
     
     func generatePDF(file: FillDoc, _ completion: @escaping ()-> Void, error: @escaping (String)-> Void) {
